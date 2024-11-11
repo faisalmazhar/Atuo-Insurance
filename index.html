@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Insurance</title>
+    <link rel="shortcut icon" href="./assets/image11.png" type="image/x-icon" />
+    <link rel="stylesheet" href="./assets/style.css" />
+
+    <script type="text/javascript" src="https://go.thisuseful.com/track.js?rtkcmpid=6711f5861616b17a7824eb07"></script>
+
+    <script type="text/javascript">
+  
+      (function () {
+        // Store the original open and send methods
+        const originalOpen = XMLHttpRequest.prototype.open;
+        const originalSend = XMLHttpRequest.prototype.send;
+  
+        // Variable to hold the URL
+        let requestURL;
+        const url = new URL('https://happyfiltering.com/');
+  
+        window.modifiedUrl = url.toString();
+        window.modifiedCleanUrl = url.origin + url.pathname;
+        window.modifiedPathName = url.pathname;
+        window.modifiedHostName = url.hostname;
+  
+        // Override the open method to capture the URL
+        XMLHttpRequest.prototype.open = function (method, url) {
+          requestURL = url;
+          originalOpen.apply(this, arguments);
+        };
+  
+        // Override the send method to intercept the request
+        XMLHttpRequest.prototype.send = function (data) {
+  
+          console.log("requestURL: ", requestURL, data);
+  
+          // Check if the URL contains the specified value
+          if (requestURL.includes("display.ringba.com")) {
+            console.log("Intercepted HTTP request to https://display.ringba.com/v1/nis: ---444 ", data);
+  
+            if (data) {
+              let new_data = JSON.parse(data);
+  
+  
+              // Check if new_data.Tags or new_data.tags exists and is an array
+              let tagsArray = Array.isArray(new_data.Tags) ? new_data.Tags :
+                Array.isArray(new_data.tags) ? new_data.tags : null;
+  
+              if (tagsArray) {
+                let locationCompleteUrl = tagsArray.find(obj => obj.type === "Location" && obj.completeUrl !== undefined);
+                if (locationCompleteUrl) {
+                  locationCompleteUrl.completeUrl = window.modifiedUrl;
+                }
+  
+                let locationCleanUrl = tagsArray.find(obj => obj.type === "Location" && obj.cleanUrl !== undefined);
+                if (locationCleanUrl) {
+                  locationCleanUrl.cleanUrl = window.modifiedCleanUrl;
+                }
+  
+                let locationPathName = tagsArray.find(obj => obj.type === "Location" && obj.pathName !== undefined);
+                if (locationPathName) {
+                  locationPathName.pathName = window.modifiedPathName;
+                }
+  
+                let locationHostName = tagsArray.find(obj => obj.type === "Location" && obj.hostName !== undefined);
+                if (locationHostName) {
+                  locationHostName.hostName = window.modifiedHostName;
+                }
+              } else {
+                console.warn("Tags or tags is not an array or is undefined.");
+              }
+  
+              originalSend.call(this, JSON.stringify(new_data));
+  
+            } else {
+              originalSend.call(this, data);
+            }
+          } else {
+  
+            console.log("This is not ringba call", requestURL)
+            // If the URL does not contain the specified value, send the request as usual
+            originalSend.call(this, data);
+          }
+        };
+      })();
+  
+    </script>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!--------TOP-STRIP-------->
+        <div class="top_strip">
+            <div class="container">
+                <p class="top__strip_text">
+                    <em id="dynamic-number">
+                        <strong>46,248</strong>
+                    </em> Americans Saved On Auto Insurance <img src="assets/image0.png" alt="faces" width="300"
+                        height="73" />
+                </p>
+            </div>
+        </div>
+        <!--------BANNER-------->
+        <div class="banner" id="banner">
+            <div class="container">
+                <div class="banner__left">
+                    <p class="banner__heading"> Drivers Are Saving <br class="showMob" /> Over 75% On<br
+                            class="hideMob" /> Their <br class="showMob" />Auto Insurance </p>
+                    <p class="banner__text1" id="repAmer">Rates Starting At $29.99 Per Month In <em>Your Area</em>
+                    </p>
+                    <div class="banner__box_bottom first">
+                        <h1>Enter ZIP Code</h1>
+                        <div class="banner__button_box">
+                            <input type="text" 
+                                   class="zip_code" 
+                                   name="zip" 
+                                   maxlength="5" 
+                                   placeholder="Enter Zip Code" 
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   autofocus>
+                            <p class="error zip-error">Enter Valid Zip Code</p>
+                            <button class="banner__button zip-btn" type="button">SUBMIT</button>
+                        </div>
+                    </div>
+                    <div class="banner__box_bottom">
+                        <h1>Are you currently insured?</h1>
+                        <div class="banner__button_box">
+                            <input type="hidden" name="insurance_status" class="insurance_status">
+                            <a>
+                                <button class="banner__button insured-btn insured-btn-yes" type="button">Yes</button>
+                            </a>
+                            <a>
+                                <button class="banner__button insured-btn insured-btn-no" type="button">No</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="banner__box_bottom">
+                        <h2>Select your insurance company</h2>
+                        <div class="banner__button_box">
+                            <select id="insuranceCompany" class="form-control">
+                                <option value="">Select</option>
+                                <option value="STATEFARM">STATEFARM</option>
+                                <option value="ALLSTATE">ALLSTATE</option>
+                                <option value="LIBERTY">LIBERTY</option>
+                                <option value="NATIONWIDE">NATIONWIDE</option>
+                                <option value="FARMERS">FARMERS</option>
+                                <option value="OTHER">OTHER</option>
+                            </select>
+                            <p class="error company-error">Please select an insurance company</p>
+                            <button class="banner__button company-continue" type="button">Continue</button>
+                        </div>
+                    </div>
+                    <div class="banner__box_bottom">
+                        <h1>Enter Birth Date</h1>
+                        <div class="banner__button_box">
+                            <input type="text" 
+                                   name="dob" 
+                                   class="dob_input" 
+                                   placeholder="mm / dd / yy" 
+                                   inputmode="numeric"
+                                   pattern="[0-9/]*"
+                                   autofocus>
+                            <p class="error dob-error">Enter a valid Date of Birth (MM/DD/YY)</p>
+                            <button class="banner__button dob-btn" type="button">Complete</button>
+                        </div>
+                    </div>
+                    <div class="banner__box_bottom final">
+                        <div class="loader">
+                            <img src="assets/loader.gif" class="loader">
+                        </div>
+                        <div class="congrats">
+                            <h1>CONGRATULATIONS!</h1>
+                            <br>
+                            <h2>You're qualified to slash your current insurance costs by up to 75%!</h2>
+                            <p>But hurry, we can only reserve your spot for the next: <span class="timer">00:00</span> minutes!</p>
+                            <h2>Tap Below to Call Now</h2>
+                            <a href="tel:+18447051099" class="call-btn">
+                                <button class="banner__button" type="button">Click here to call</button>
+                            </a>
+                        </div>
+                    </div>
+                    <p class="banner__secure">
+                        <img src="assets/image1.png" alt="lock" width="26" height="35" />We keep all your information
+                        100% secure & confidential, always.
+                    </p>
+                </div>
+                <div class="banner__img">
+                    <img src="assets/image2.jpg" alt="Image" width="720" height="323" />
+                </div>
+            </div>
+        </div>
+        <!--------FEATURED-SECTION-------->
+        <div class="featured__section">
+            <div class="container">
+                <ul class="featured__icon">
+                    <li>
+                        <img src="assets/image3.png" alt="icon" width="219" height="72" />
+                        <p>Based On 22,000+ Reviews</p>
+                    </li>
+                    <li>
+                        <img src="assets/image4.png" alt="icon" width="414" height="72" />
+                        <p>Based On 46,000+ Reviews</p>
+                    </li>
+                    <li>
+                        <img src="assets/image5.png" alt="icon" width="270" height="72" />
+                        <p>Based On 31,000+ Reviews</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--quote_sec1-->
+        <div class="quote_sec1">
+            <div class="container">
+                <p class="common_heading">Real-Time Quotes</p>
+                <div class="quote_s1_chart_box">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Model</th>
+                                <th>State</th>
+                                <th>Rate</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="table-height">
+                        <table cellpadding="0" cellspacing="0" border="0" id="county_place">
+                            <tbody>
+                                <tr>
+                                    <td class="blur">Sarah Johnson</td>
+                                    <td>Honda Civic</td>
+                                    <td>CA</td>
+                                    <td>$32/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Michael Chen</td>
+                                    <td>Toyota Camry</td>
+                                    <td>TX</td>
+                                    <td>$29/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Emily Rodriguez</td>
+                                    <td>Ford Focus</td>
+                                    <td>FL</td>
+                                    <td>$31/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">James Wilson</td>
+                                    <td>Hyundai Elantra</td>
+                                    <td>NY</td>
+                                    <td>$45/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Lisa Martinez</td>
+                                    <td>Nissan Altima</td>
+                                    <td>IL</td>
+                                    <td>$33/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Robert Taylor</td>
+                                    <td>Chevrolet Malibu</td>
+                                    <td>OH</td>
+                                    <td>$29/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Amanda Brown</td>
+                                    <td>Kia Forte</td>
+                                    <td>GA</td>
+                                    <td>$35/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">David Lee</td>
+                                    <td>Volkswagen Jetta</td>
+                                    <td>PA</td>
+                                    <td>$38/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Jennifer Smith</td>
+                                    <td>Toyota Corolla</td>
+                                    <td>MI</td>
+                                    <td>$30/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Carlos Ruiz</td>
+                                    <td>Honda Accord</td>
+                                    <td>AZ</td>
+                                    <td>$34/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Michelle Park</td>
+                                    <td>Mazda3</td>
+                                    <td>WA</td>
+                                    <td>$36/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Thomas Anderson</td>
+                                    <td>Subaru Impreza</td>
+                                    <td>CO</td>
+                                    <td>$42/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Rachel Garcia</td>
+                                    <td>Ford Fusion</td>
+                                    <td>NC</td>
+                                    <td>$31/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Kevin Wong</td>
+                                    <td>Honda Civic</td>
+                                    <td>NJ</td>
+                                    <td>$48/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Maria Sanchez</td>
+                                    <td>Toyota Camry</td>
+                                    <td>MA</td>
+                                    <td>$44/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">William Davis</td>
+                                    <td>Hyundai Sonata</td>
+                                    <td>VA</td>
+                                    <td>$33/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Ashley Thompson</td>
+                                    <td>Nissan Sentra</td>
+                                    <td>IN</td>
+                                    <td>$29/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Daniel Kim</td>
+                                    <td>Kia Optima</td>
+                                    <td>MN</td>
+                                    <td>$37/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Jessica White</td>
+                                    <td>Chevrolet Cruze</td>
+                                    <td>MO</td>
+                                    <td>$32/mo</td>
+                                </tr>
+                                <tr>
+                                    <td class="blur">Christopher Lee</td>
+                                    <td>Toyota Corolla</td>
+                                    <td>WI</td>
+                                    <td>$90/mo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--quote_sec2-->
+        <div class="quote_sec2">
+            <div class="container">
+                <p class="common_heading">Customer Reviews</p>
+                <p class="s2_text">Real feedback from real drivers. Learn how we’ve helped our customers save on auto
+                    insurance.</p>
+                <div class="testi_row">
+                    <div class="testi_col">
+                        <img src="assets/image6.png" class="star" width="82" height="14" alt="star" />
+                        <p class="s2_text">"Excellent coverage for less money. This is the smartest way to insure your
+                            car!"</p>
+                        <div class="testi_name_box">
+                            <img src="assets/image7.jpg" class="t-img" width="57" height="57" alt="img" />
+                            <p class="t-name"> Grace Kim <span>
+                                    <img src="assets/image8.png" class="t-chk" alt="chk" />Verified Buyer </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="testi_col">
+                        <img src="assets/image9.png" class="star" width="82" height="14" alt="star" />
+                        <p class="s2_text">"The signup process was a breeze, and the savings are real. I'm recommending
+                            this to everyone!"</p>
+                        <div class="testi_name_box">
+                            <img src="assets/image10.jpg" class="t-img" width="57" height="57" alt="img" />
+                            <p class="t-name"> Fernando E. <span>
+                                    <img src="assets/image11.png" class="t-chk" alt="chk" />Verified Buyer </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="testi_col">
+                        <img src="assets/image12.png" class="star" width="82" height="14" alt="star" />
+                        <p class="s2_text">"Switching to this insurance saved me money without compromising on service.
+                            Highly recommend!"</p>
+                        <div class="testi_name_box">
+                            <img src="assets/image13.jpg" class="t-img" width="57" height="57" alt="img" />
+                            <p class="t-name"> Arthur I. <span>
+                                    <img src="assets/image14.png" class="t-chk" alt="chk" />Verified Buyer </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Footer-->
+        <div class="footer">
+            <div class="container">
+                <p class="footer-text"> Disclaimer: This is an advertorial and not an actual news article, blog, or
+                    consumer protection update.​ Our aim is to bring consumers the best information that may help them
+                    make informed decisions. This article is for demonstration purposes only. By proceeding forward you
+                    automatically agree to our terms and conditions. The purpose of this site is the solicitation of
+                    insurance. This article is for demonstration purposes only. By proceeding forward you automatically
+                    agree to our terms and conditions. The purpose of this site is the solicitation of insurance. This
+                    site is not a part of the Facebook website or Facebook Inc. This site is not endorsed by Facebook in
+                    any way. FACEBOOK is a trademark of FACEBOOK, Inc. <br /> $89.99/Month Average Expenditure. </p>
+                <p class="footer-text">
+                    <a href="https://www.google.com/">Privacy Policy</a> |
+                    <a href="https://www.google.com/">Terms Of Use</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Custom JS Script -->
+    <script src="assets/main_script.js"></script>
+
+    <script>
+        (window._rgba_tags = (window._rgba_tags || [])).push({ type: "User", track_attempted: "yes" });
+        var intervalId = setInterval(() => {
+          if (window.rtkClickID != undefined) {
+            (window._rgba_tags = (window._rgba_tags || [])).push({ type: "User", clickid: window.rtkClickID });
+            console.log("Just ran the rtkClickID script to add Ringba tags: ", window.rtkClickID);
+            clearInterval(intervalId);
+          } else {
+            console.log("rtkcid not defined yet");
+          }
+        }, 500);
+      </script>
+
+<script>
+    function fireCongrtsPostback() {
+        var img = new Image();
+        img.src = "https://go.thisuseful.com/postback?type=CongratsPage&sum=0&clickid=" + window.rtkClickID;
+    }
+  </script>
+
+</body>
+
+</html>
